@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+<style>
+ 
+  .container div {
+    border: 2px solid black;
+    width: 30%;
+    height: 30%;
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-top: 3px;
+    background-size: 100% 100%;
+    background-color: black;
+    border-color: aqua;
+    border-radius: 10px;
+    animation-name: ani;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    transition: 2s;
+    transition-timing-function: linear;
+  }
+  .container div:hover{
+    scale: 1.1;
+    transition: 1s;
+  }
+  
+  @keyframes ani {
+    25%{
+      border: 3px solid blue;
+    }
+    50%{
+      border: 3px solid red;
+
+    }
+    75%{
+      border: 3px solid greenyellow;
+    }
+    100%{
+      border: 3px solid blue;
+    }
+  }
+
+
+  .container {
+    display: flex;
+    width: 80vw;
+    height: 80vw;
+    max-width: 400px;
+    max-height: 400px;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background-color: aqua;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 2px solid green;
+    margin-left: 34vw;
+  }
+  @media screen and (max-width: 500px){
+     .container{
+      margin-left: 10%;
+     }    
+  }
+  .result{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    height: max-content;
+    align-items: center;
+  }
+  #winner{
+   width: 100px;
+   min-height: 40px;
+   border: 2px solid white;
+   text-align: center;
+   color: red;
+   align-content: center;
+   background-color: white;
+   font-size: 4vh;
+   border-radius: 10px;
+   
+  }
+  #restart{
+   width: fit-content;
+   border: 2px solid black;
+   height: fit-content;
+   border-radius: 10px;
+  }
+</style>
+
+<body style="background-color: black; padding: 0%;margin: 0%;">
+  <div style="width: 100%;color: blue;font-size: 8vh;text-align: center;background-image: linear-gradient(to right, red , yellow,red);padding: 10px; " >XO GAME</div>
+  <div class="container">
+    <div onclick="func(this)" class="divs"></div>
+    <div onclick="func(this)" class="divs"></div>
+    <div onclick="func(this)" class="divs"></div>
+    <div onclick="func(this)" class="divs"></div>
+    <div onclick="func(this)" class="divs"></div>
+    <div onclick="func(this)" class="divs"></div>
+    <div onclick="func(this)" class="divs"></div>
+    <div onclick="func(this)" class="divs"></div>
+    <div onclick="func(this)" class="divs"></div>
+  </div>  
+  <div class="result">
+  <div id="winner">WINNER</div>
+  <div id="restart"> <button style="color: red;" onclick="restart()">RESTART</button></div>
+  <div>
+
+  <script>
+    let a = "https://thumbs.dreamstime.com/b/letter-luxurious-glowing-festive-pink-shining-alphabet-isolated-solid-black-background-d-illustration-symbols-glamorous-151671176.jpg";
+    let b ="https://media.istockphoto.com/id/1158704978/photo/number-0-of-luxurious-glowing-festive-pink-polished-alphabet-isolated-on-solid-black.jpg?s=612x612&w=0&k=20&c=sb_UEo7WYP-Jjdy5Q3gVw2wYvbIBs3YReyHmb6U5o1g=";
+
+    let player = a;
+    let gameover = false;
+    let arr = document.getElementsByClassName("divs");
+
+    function func(j) {
+      if (gameover) {
+        return;
+      }
+      if (!j.style.backgroundImage) {
+        j.style.backgroundImage = `url("${player}")`;
+
+        if (check(arr, player)) {
+          if (player === a) {
+            document.getElementById("winner").innerHTML = "x wins";
+            alert("X WINS");
+          } else {
+            document.getElementById("winner").innerHTML = "o wins";
+            alert("O WINS");
+          }
+
+          gameover = true;
+          
+          return;
+        }
+        draw();
+
+        player = player === a ? b : a;
+      }
+    }
+
+    
+    
+    
+    
+    
+    
+    function check(arr, player) {
+      let url = `url("${player}")`;
+      if (
+        (arr[0].style.backgroundImage === url &&
+          arr[1].style.backgroundImage === url &&
+          arr[2].style.backgroundImage === url) ||
+        (arr[3].style.backgroundImage === url &&
+          arr[4].style.backgroundImage === url &&
+          arr[5].style.backgroundImage === url) ||
+        (arr[6].style.backgroundImage === url &&
+          arr[7].style.backgroundImage === url &&
+          arr[8].style.backgroundImage === url) ||
+        (arr[0].style.backgroundImage === url &&
+          arr[3].style.backgroundImage === url &&
+          arr[6].style.backgroundImage === url) ||
+        (arr[1].style.backgroundImage === url &&
+          arr[4].style.backgroundImage === url &&
+          arr[7].style.backgroundImage === url) ||
+        (arr[2].style.backgroundImage === url &&
+          arr[5].style.backgroundImage === url &&
+          arr[8].style.backgroundImage === url) ||
+        (arr[0].style.backgroundImage === url &&
+          arr[4].style.backgroundImage === url &&
+          arr[8].style.backgroundImage === url) ||
+        (arr[2].style.backgroundImage === url &&
+          arr[4].style.backgroundImage === url &&
+          arr[6].style.backgroundImage === url)
+      ) {
+        return true;
+      }
+
+      return false;
+    }
+
+
+
+
+
+    function draw() {
+      for (let i = 0; i < arr.length; i++) {
+        if (!arr[i].style.backgroundImage) {
+          return;
+        }
+      }
+      document.getElementById("winner").innerHTML = "TIE";
+      alert("Game tied")
+      gameover = true;
+    }
+
+
+
+    function restart(){
+      for(let i=0;i<arr.length;i++){
+        arr[i].style.backgroundImage="";
+
+      }
+      player=a;
+      gameover=false;
+      document.getElementById("winner").innerHTML="WINNER";
+
+    }
+
+
+    let win=document.getElementById("winner");
+     let result=win.innerText;
+     if(result==="x wins"){
+      alert("x wins");
+     }
+    
+
+
+
+  </script>
+</body>
+
+</html>

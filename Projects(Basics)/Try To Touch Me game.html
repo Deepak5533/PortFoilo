@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      div {
+        width: 150px;
+        height: 150px;
+        border: 2px solid black;
+        background-size: 100%;
+      }
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 30px;
+        width: 50%;
+        row-gap: 20px;
+        margin-left: 25%;
+        
+      }
+      .points{
+        width: 130px;
+        height: 30px;
+        border: 2px solid red;
+        border-radius: 10px;
+        padding-left: 1%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="container">
+    </nav>
+    <div class="points">POINTS :</div>
+    
+
+    <script>
+      let img;
+      for (let i = 0; i < 9; i++) {
+        let a = document.createElement("div");
+        a.onclick = () => sel(a);
+
+        document.getElementsByClassName("container")[0].append(a);
+      }
+
+      function Start() {
+        let rand = Math.ceil(Math.random() * 9) - 1;
+        img =
+          "https://i.pinimg.com/736x/91/db/4e/91db4e3d67671727434a2a09244db8af.jpg";
+
+        for (let i = 0; i < 9; i++) {
+          if (i === rand) {
+            document.getElementsByTagName("div")[
+              i
+            ].style.backgroundImage = `url("${img}")`;
+          } else {
+            document.getElementsByTagName("div")[i].style.backgroundImage =
+              "none";
+          }
+        }
+      }
+
+      let points = 0;
+      function sel(a) {
+        if (a.style.backgroundImage === `url("${img}")`) {
+          points++;
+          document.getElementsByClassName("points")[0].innerHTML="POINTS = "+points;
+        }
+      }
+
+      setInterval(Start, 700);
+    </script>
+  </body>
+</html>
